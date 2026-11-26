@@ -35,6 +35,15 @@ rides) from calendar, weather, and lagged-demand features.
   summary.
 - Paths and constants live in `src/config.py`. Nothing is hardcoded twice.
 
+## Project-specific verification
+- `cnt_roll_3` uses only the previous three calendar days.
+  Keep `LAG_WARMUP = 7` for the existing seven-day features.
+- Every raw CSV column must be explicitly classified in `src/config.py`.
+- Unknown weather labels must raise an error rather than silently map to NaN.
+- Use `/seed-fault <description>` to inject, verify, document, and repair
+  a controlled fault. Preserve actual test and hook output.
+- Never modify the original raw CSV.
+
 ## Gotchas
 - The mirror in `DATA_URL` is missing 2011-03-10. It is NOT the UCI file:
   728 rows from 2011-01-03, not 731 from 2011-01-01.
