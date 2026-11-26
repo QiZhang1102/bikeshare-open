@@ -10,7 +10,7 @@
 - Comparison baseline: 01669d7
 - Review date: November 25, 2026
 - Scope: Exercise 1's `cnt_roll_3` implementation, its test, and the recorded feature-selection decision.
-- Assessment status: Draft for the reviewer's personal confirmation; corrections recommended below.
+- Assessment status: Final reviewer judgment; corrections recommended below.
 
 The reviewed branch and commit identify the work being assessed. Storing
 this report on `exercise-4&5` does not change its subject: QI Zhang's `main`
@@ -38,8 +38,6 @@ Session `8a0b565d-2c7c-40b2-a652-7f353d200175` completed with exit code 0
 and `is_error=false`.
 
 ### Human Judgment
-
-*Assessment draft for the reviewer's personal confirmation.*
 
 I reject the auditor's principal finding and proposed fix. At the reviewed
 commit, `src/features.py:77` actually uses
@@ -134,7 +132,7 @@ this audit document.
 Recommendation: retain the verified three-day implementation, correct the HGB
 validation record, and add a raw-column contract that fails on unclassified
 CSV headers. The agent's proposed `LAG_WARMUP` change should not be applied.
-Reviewer confirmation of this assessment remains pending.
+These recommendations are my final judgment for the reviewed commit.
 
 ## Original leakage-auditor Output (Verbatim)
 
