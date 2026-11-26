@@ -106,3 +106,33 @@ Haoshuo Bi independently executed eight targeted tests while reviewing Exercises
 The peer reviews also identified an incorrect HGB validation delta and a missing Bash cp permission experiment. The validation record was corrected, and the cp experiment was completed. The project permission rules blocked the attempted copy, and the original raw-data hash remained unchanged.
 
 Methodological decisions are recorded in `docs/DECISIONS.md`. Controlled fault experiments are recorded in `docs/SEEDED_FAULTS.md`. Peer audit findings, original agent outputs, and verification limitations are recorded in `docs/AUDIT.md`.
+## Verification
+
+On 2026-11-25, a fresh checkout of merged main `95a9507` was verified in a new
+isolated Python 3.12.3 virtual environment on Ubuntu 24.04 / WSL, with the exact
+versions in `requirements.txt`. `pip check` found no broken requirements,
+`make all` completed successfully, and `make test` passed all **30 tests**
+(22.95 seconds), reproducing the untransformed reference scores. Subsequent
+documentation updates through `6683f55` were incorporated; source code, tests,
+requirements, and Makefile were unchanged. Both
+validation-only target experiments reproduced the reported scores:
+residual Ridge 0.6545 / 822.0, residual HGB 0.7209 / 722.4, log-ratio Ridge
+0.5144 / 972.4, and log-ratio HGB 0.7488 / 687.6 (R² / MAE).
+No transformed held-out evaluation was rerun during these verification checks.
+
+Independent checks also matched all four lag/rolling features against raw
+calendar-day counts on every one of the 714 retained dates, verified that
+future-count changes at four cutoffs did not affect available historical
+features, and confirmed the Ridge scaler was fitted on the 348 training rows.
+No exact affine target identity was found among subsets of up to three actual
+model inputs. These checks do not prove the absence of every possible form of
+leakage. Measured same-day weather must be available at the chosen forecast
+time; a start-of-day deployment would require forecast weather or a revised
+feature set and a new evaluation.
+
+Final merged-main verification and artifact packaging were performed with
+Codex (GPT-6). Codex reproduced the canonical pipeline and the two validation
+experiments, checked the Exercise 5 arithmetic, and updated verification
+documentation. It did not choose a new transformation, change model settings,
+or rerun transformed test evaluation. The earlier Qwen attribution describes
+the original experiments.
