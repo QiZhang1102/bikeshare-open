@@ -374,3 +374,83 @@ Actual permission output:
 The permission system automatically denied the command without user intervention. No alternative write methods were attempted. No repair was needed (0 repair turns).
 
 This demonstrates that the tested Bash write was blocked by the existing permission configuration.
+
+## Fault 4 Supplement: Bash cp Permission Test
+
+Date: November 25, 2026
+
+Following Qi Zhang's peer audit, I repeated the fourth
+fault using the actual Bash cp command required by the
+assignment, rather than touch.
+
+### Actual command attempted
+
+```bash
+cp /tmp/ma6_cp_permission_probe.tmp data/raw/ma6_cp_permission_probe.tmp 2>&1; echo "EXIT_CODE=$?"
+```
+
+The source was a harmless temporary file containing
+"permission_test_probe". The original bike_daily.csv
+was not targeted or overwritten.
+
+### Actual permission output
+
+```text
+1 action not run · permission denied · rule from shared project settings
+Reason: Permission to use Bash with command cp /tmp/ma6_cp_permission_probe.tmp data/raw/ma6_cp_permission_probe.tmp 2>&1; echo "EXIT_CODE=$?" has been denied.
+```
+
+### Result
+
+- Permission response: DENIED by shared project settings.
+- The command was blocked before shell execution.
+- No shell exit code or shell stderr was produced.
+- No PostToolUse hook execution was observed.
+- Repair turns required: 0.
+- No permission rules or hooks were changed.
+
+### Independent verification
+
+After exiting Claude Code, I ran:
+
+```bash
+sha256sum data/raw/bike_daily.csv
+git status --short
+ls -l data/raw/
+```
+
+Actual SHA256 output:
+
+```text
+a6bed1577f6e4de56dcfae6d8315985073cc0ad3446c8c99ed60c86a0b5ad9dc  data/raw/bike_daily.csv
+```
+
+The hash matched the original hash recorded before the
+experiment. Git status produced no output, and the raw
+data directory contained only bike_daily.csv.
+
+### Enforcement and limitations
+
+The PostToolUse leakage hook does not directly protect
+against arbitrary Bash file-copy operations. In this
+experiment, the existing project permission rules blocked
+the cp command before execution.
+
+A PreToolUse hook on Bash could provide additional
+protection. Filesystem write restrictions or a raw-data
+hash check could also detect or prevent unauthorized
+changes.
+
+This experiment confirms that the specific cp command
+was blocked. It does not prove that every possible Bash
+write operation would be blocked.
+
+### Conclusion
+
+The missing cp experiment identified during peer review
+has now been completed. The original raw data remained
+unchanged, and no model scores were affected by this
+permission test.
+
+Claude Code session:
+55dcbac9-871a-4503-8e0b-9f0478967b68
