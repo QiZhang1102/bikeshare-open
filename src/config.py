@@ -57,3 +57,11 @@ LAG_WARMUP = 7
 # Exercise 4: centre the label on a level known strictly before prediction.
 TARGET_REFERENCE = "cnt_roll_7"
 TARGET_TRANSFORMS = ("residual", "log_ratio")
+
+# Raw predictor inputs, including categorical inputs used or excluded
+# during feature engineering. Unknown raw columns must fail validation.
+RAW_INPUT_COLS = {
+    "season", "mnth", "holiday", "weekday",
+    "temp", "atemp", "hum", "windspeed",
+    "workday", "weather",
+}

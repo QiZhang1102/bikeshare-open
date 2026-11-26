@@ -78,3 +78,11 @@ def test_cnt_roll_3_is_mean_of_three_prior_days(feats):
     print(f"raw cnt Jan 9/10/11, 2011: {list(counts)}  mean: {expected}")
     actual = feats.set_index("dteday").cnt_roll_3[date]
     assert actual == pytest.approx(expected)
+
+
+def test_unknown_weather_raises():
+    """encode_weather should raise ValueError on unknown labels."""
+    from src.features import encode_weather
+
+    with pytest.raises(ValueError, match="unmapped weather labels"):
+        encode_weather(pd.Series(["UNKNOWN"]))
