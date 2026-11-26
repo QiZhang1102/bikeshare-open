@@ -29,7 +29,7 @@ All results in this table use the original, untransformed prediction target.
 
 ## Headline finding
 
-Ridge performed better than the original Histogram Gradient Boosting (HGB) model on the chronological test set. With 15 features, Ridge achieved a test R2 of 0.5800, while HGB achieved -0.5338. One possible explanation is that bikeshare demand increased over time, and the tree-based model had difficulty extrapolating beyond its training range. However, Ridge's test MAE of 946.2 was higher than persistence's MAE of 840.1, showing that a higher R2 does not necessarily mean better daily forecasting performance. Adding `cnt_roll_3` decreased validation R2 by 0.0036 for Ridge and 0.0202 for HGB, so we retained the feature for reproducibility but recommend the original 14-feature set based on validation performance.
+Ridge performed better than the original Histogram Gradient Boosting (HGB) model on the chronological test set. With 15 features, Ridge achieved a test R2 of 0.5800, while HGB achieved -0.5338. Despite its negative test R2, HGB still outperformed the mean baseline, which had a test R2 of -2.1441. One possible explanation is that bikeshare demand increased over time, and the tree-based model had difficulty extrapolating beyond its training range. However, Ridge's test MAE of 946.2 was higher than persistence's MAE of 840.1, showing that a higher R2 does not necessarily mean better daily forecasting performance. Adding `cnt_roll_3` decreased validation R2 by 0.0036 for Ridge and 0.0202 for HGB, so we retained the feature for reproducibility but recommend the original 14-feature set based on validation performance.
 
 ## Exercise 4: target transformation
 
@@ -66,7 +66,7 @@ The transformation is defensible because it separates the historical demand leve
 
 The original HGB predictions peaked at 5625.3, below the training maximum of 6043. The transformed HGB predictions reached 9497.0 and exceeded the training maximum on 79 test days.
 
-However, the method assumes that the previous seven daily ride counts are available when making each prediction. The historical reference may lag behind sudden demand changes, and inverse-log bias remains uncorrected.
+However, the method assumes that the previous seven daily ride counts are available when making each prediction. The historical reference may lag behind sudden demand changes, and inverse-log bias remains uncorrected. The experiments also assume that the required calendar and weather inputs are available at prediction time. The availability of observed same-day weather at the start of the day has not been verified.
 
 Overall, target transformation improved HGB substantially, but the results do not prove that it is always better than simpler forecasting methods.
 
@@ -98,12 +98,12 @@ We used Claude Code with local language models served through Ollama, together w
 - Qi Zhang (Exercise 1): Selected and evaluated the three-day rolling mean feature. Decided to retain the feature for reproducibility while recommending the original feature set based on validation performance.
 - Haoshuo Bi (Exercise 2): Supervised the seeded-fault experiments, examined actual test failures and hook outputs, reviewed the verification changes, and documented limitations of automated enforcement.
 - Shujia Chen (Exercises 4 and 5): Proposed the target transformations, defined the validation-based selection rule, and evaluated the trade-off between Ridge and persistence.
-- Exercise 3: Group members reviewed teammate implementations and evaluated the agent audit findings. [Confirm completion of all peer audits.]
+- Exercise 3: All three group members completed peer audits and independently evaluated the agent findings. Qi Zhang identified the missing Bash cp experiment, which Haoshuo Bi subsequently completed. Shujia Chen rejected an incorrect auditor recommendation to change LAG_WARMUP and verified the original three-day rolling mean implementation.
 
 Haoshuo Bi independently executed eight targeted tests while reviewing Exercises 4 and 5. All eight selected tests passed. The peer audit was limited to static review and targeted testing rather than a complete training reproduction.
 
+
+The peer reviews also identified an incorrect HGB validation delta and a missing Bash cp permission experiment. The validation record was corrected, and the cp experiment was completed. The project permission rules blocked the attempted copy, and the original raw-data hash remained unchanged.
+
 Methodological decisions are recorded in `docs/DECISIONS.md`. Controlled fault experiments are recorded in `docs/SEEDED_FAULTS.md`. Peer audit findings, original agent outputs, and verification limitations are recorded in `docs/AUDIT.md`.
 
-[Confirm attribution details against the final decisions log.]
-
-[Add final repository self-audit results and verification status after merging.]
