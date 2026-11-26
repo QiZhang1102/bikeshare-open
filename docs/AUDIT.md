@@ -38,6 +38,13 @@ I agree with the Exercise 5 conclusion under the stated
 absolute-error cost assumption. Persistence has a lower test
 MAE than Ridge (840.1 versus 946.2 rides/day).
 
+I agree with the auditor's main findings within the
+reviewed scope. I found no verified issue that changes
+the reported experimental results. The potential row-loss
+concern is addressed by the existing contract test.
+However, the audit was limited to static inspection and
+targeted testing, not full experimental reproduction.
+
 ### Independent Verification
 
 Command:
