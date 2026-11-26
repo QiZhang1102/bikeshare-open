@@ -14,8 +14,8 @@
     "weather_severity",
     "cnt_lag_1",
     "cnt_lag_7",
-    "cnt_roll_7",
-    "cnt_roll_3"
+    "cnt_roll_3",
+    "cnt_roll_7"
   ],
   "n_train": 348,
   "n_valid": 182,
