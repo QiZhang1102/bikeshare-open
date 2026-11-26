@@ -1,15 +1,17 @@
 # Exercise 3 - Peer Audit
 
-## Review by Haoshuo Bi
+## Review Identification
 
-- Date: 2026-11-25
-- Reviewed exercises: Exercise 4 and Exercise 5
+- Reviewer: Haoshuo Bi (HaoshuoBi)
+- Reviewee: Shujia Chen (IrisC113)
+- Repository: https://github.com/QiZhang1102/bikeshare-open
 - Reviewed branch: exercise-4&5
 - Reviewed commit: 2f90dfb
-- Reviewer: Haoshuo Bi
-- AI tool: Claude Code with bikeshare-coder via Ollama
-- Subagent: leakage-auditor
-- Pull request: https://github.com/QiZhang1102/bikeshare-open/pull/2
+- Comparison baseline: 687b32d
+- Review date: November 25, 2026
+- Scope: Exercise 4 target transformation and
+  Exercise 5 ridge vs persistence analysis.
+- Assessment status: Approved on Pull Request #2.
 
 ### AI Audit Results
 
