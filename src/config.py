@@ -54,6 +54,9 @@ VALID_END = "2012-06-30"
 # to bound how many rows may legitimately disappear.
 LAG_WARMUP = 7
 
+# Exercise 4: centre the label on a level known strictly before prediction.
+TARGET_REFERENCE = "cnt_roll_7"
+TARGET_TRANSFORMS = ("residual", "log_ratio")
 
 # Raw predictor inputs, including categorical inputs used or excluded
 # during feature engineering. Unknown raw columns must fail validation.

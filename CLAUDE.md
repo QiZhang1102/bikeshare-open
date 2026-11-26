@@ -24,6 +24,10 @@ rides) from calendar, weather, and lagged-demand features.
   count) alongside every model. A negative R^2 is a finding, not a bug
   to hide.
 
+- Target transforms are experimental: use `--target-transform` and a separate
+  `--out`. Select on validation, freeze `--selection` before `--include-test`,
+  and keep canonical `reports/metrics.json` untransformed.
+
 ## Style
 - Standard library, pandas, scikit-learn only. No new dependencies
   without asking. Versions are pinned in `requirements.txt`.

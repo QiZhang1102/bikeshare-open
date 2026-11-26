@@ -40,7 +40,7 @@ names the model, so `claude` works with no environment variables. Run
 | 16 GB RAM (any laptop) | `qwen3.5:9b` (~7 GB) | `make model` |
 | 32 GB RAM, or 24 GB+ Apple Silicon | `qwen3.5:27b` (~18 GB) | `make model BASE=qwen3.5:27b` |
 | 48 GB+ | `qwen3.5:35b` (~22 GB) | `make model BASE=qwen3.5:35b` |
-| Under 16 GB, or no patience | a hosted model, below | — |
+| Under 16 GB, or no patience | a hosted model, below | â€” |
 
 The 64k context window adds several GB on top of the download size at run
 time. If the model runs but is painfully slow, drop a size, not the context.
@@ -89,3 +89,35 @@ skill the lesson builds in Steps 7-8. `model/` holds the Modelfile and the
 readiness check. `agent/audit.py` is the Agent SDK batch auditor from Part 4;
 it uses the same local endpoint (`AUDIT_MODEL` overrides the model). Record
 methodological decisions in `docs/DECISIONS.md`.
+
+## Target transformation experiment (Exercise 4)
+
+Use these commands on a fresh checkout after `make all`, with dependencies installed.
+Select on validation and freeze the comparison before evaluating transformed test predictions.
+The completed experiment is summarized in `REPORT.md`. Do not rerun test
+to select another transformation; the commands below document fresh-checkout reproduction.
+
+From the repository root, reproduce validation with:
+
+```sh
+python -m src.train --target-transform residual --validation-only --out reports/exercise4/residual_validation.json
+python -m src.train --target-transform log_ratio --validation-only --out reports/exercise4/log_ratio_validation.json
+```
+
+For a fresh checkout, after reproducing validation, create a frozen manifest before inspecting test:
+
+```python
+import json
+from pathlib import Path
+from src.train import experiment_fingerprints
+lock = {"selected_transform": "log_ratio", "ridge_control": "residual",
+        "fingerprints": experiment_fingerprints(),
+        "test_output": str(Path("reports/exercise4/final_evaluation.json").resolve())}
+Path("reports/exercise4/selection.json").write_text(json.dumps(lock), encoding="utf-8")
+```
+
+```sh
+python -m src.train --target-transform log_ratio --ridge-control residual --include-test --selection reports/exercise4/selection.json --out reports/exercise4/final_evaluation.json
+```
+
+The test command rejects code/data drift, a different locked comparison, the canonical metrics destination, or an already-existing frozen output. `make all` continues to run the original untransformed pipeline. Experiment outputs under `reports/exercise4/` are local and ignored by Git. The method and results are summarized in `REPORT.md`; the implementation is in `src/train.py` behind flags.
