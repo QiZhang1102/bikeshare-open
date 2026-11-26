@@ -47,3 +47,7 @@ I agree with the auditor on the five forecasting checks. I don’t see a reason 
 ## Limits of this review
 
 The tests cover the code at the reviewed commit. For the four earlier fault experiments, this review uses Nate’s saved output. It did not recreate the faults or rerun training to reproduce the model scores.
+
+### Follow-up
+
+HaoshuoBi completed the Bash `cp` permission test and documented the actual denial and unchanged raw-data hash in [SEEDED_FAULTS.md](https://github.com/QiZhang1102/bikeshare-open/blob/haoshuobi-exercise2/docs/SEEDED_FAULTS.md#L378). The issue identified during my peer review has been addressed.
