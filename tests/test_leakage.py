@@ -64,3 +64,17 @@ def test_no_missing_values(feats):
 def test_dates_are_sorted_and_unique(feats):
     assert feats.dteday.is_monotonic_increasing
     assert feats.dteday.is_unique
+
+
+def test_cnt_roll_3_is_mean_of_three_prior_days(feats):
+    """cnt_roll_3 for date d must be the mean of cnt on the three days before it."""
+    by_date = (
+        load_raw().sort_values("dteday").reset_index(drop=True).set_index("dteday")[TARGET]
+    )
+    date = pd.Timestamp("2011-01-12")
+    window = [date - pd.Timedelta(days=k) for k in range(1, 4)]
+    counts = [by_date[d] for d in window]
+    expected = sum(counts) / len(counts)
+    print(f"raw cnt Jan 9/10/11, 2011: {list(counts)}  mean: {expected}")
+    actual = feats.set_index("dteday").cnt_roll_3[date]
+    assert actual == pytest.approx(expected)
