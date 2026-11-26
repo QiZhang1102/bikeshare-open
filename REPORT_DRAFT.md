@@ -81,7 +81,7 @@ We would not deploy the current untransformed Ridge model over persistence if th
 We used Claude Code with local language models served through Ollama, together with AI assistance during development and report preparation.
 
 - Haoshuo Bi: Used Qwen3.5 9B via Ollama as `bikeshare-coder`, with Q4_K_M quantization and a configured context window of 65,536 tokens.
-- Qi Zhang: Used Qwen3.5 2B via Ollama as `bikeshare-coder` with a 65,536-token context window. Switched to Recursive Flint via OpenRouter during Exercise 1, then switched back to Qwen3.5 2B for Exercise 3.
+- Qi Zhang: Used Qwen3.5 2B via Ollama (`bikeshare-coder`, 65,536-token context), then switched to Recursive Flint via OpenRouter for Exercise 1. Used Qwen2.5-Coder 3B via Ollama for Exercise 3.
 - Shujia Chen: Used Qwen3.5 4B (4.2B parameters, Q4_K_M quantization) via Ollama as `bikeshare-coder`, with a 65,536-token context window. No model switching occurred during local experiments and self-auditing.
 
 **Agent-generated contributions**
