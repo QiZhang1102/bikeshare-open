@@ -53,3 +53,12 @@ VALID_END = "2012-06-30"
 # have no complete history and are dropped; tests/test_contract.py uses this
 # to bound how many rows may legitimately disappear.
 LAG_WARMUP = 7
+
+
+# Raw predictor inputs, including categorical inputs used or excluded
+# during feature engineering. Unknown raw columns must fail validation.
+RAW_INPUT_COLS = {
+    "season", "mnth", "holiday", "weekday",
+    "temp", "atemp", "hum", "windspeed",
+    "workday", "weather",
+}
