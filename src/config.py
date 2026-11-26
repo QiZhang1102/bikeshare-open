@@ -53,3 +53,7 @@ VALID_END = "2012-06-30"
 # have no complete history and are dropped; tests/test_contract.py uses this
 # to bound how many rows may legitimately disappear.
 LAG_WARMUP = 7
+
+# Exercise 4: centre the label on a level known strictly before prediction.
+TARGET_REFERENCE = "cnt_roll_7"
+TARGET_TRANSFORMS = ("residual", "log_ratio")
